@@ -16,17 +16,35 @@ public class DialogueManagerLevels : MonoBehaviour
 
     private string[][] levelDialogues = new string[4][];
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Friend")
+        {
+            dialoguePanel.SetActive(true);
+            isDialogueActive=true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Friend")
+        {
+            dialoguePanel.SetActive(false);
+            isDialogueActive=false;
+        }
+    }
+
     void Start()
     {
         SetupDialogues();
         currentDialogue = levelDialogues[currentLevel - 1];
-        dialoguePanel.SetActive(true);
+        dialoguePanel.SetActive(false);
         DisplayNextLine();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && isDialogueActive)
+        if (Input.GetKeyDown(KeyCode.Space) && isDialogueActive)
         {
             DisplayNextLine();
         }
